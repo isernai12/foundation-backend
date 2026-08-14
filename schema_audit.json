@@ -1,0 +1,14 @@
+{
+  "database_info": {
+    "name": "neondb",
+    "version": "PostgreSQL 18.4 (c9a59a4) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+    "target": "postgresql://***:***@ep-dark-bar-azxfwau3-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+  },
+  "schemas": [
+    "information_schema",
+    "public"
+  ],
+  "tables": {},
+  "enums": [],
+  "table_list": []
+}
