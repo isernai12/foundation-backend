@@ -1,8 +1,8 @@
 from typing import Optional, List
 from sqlalchemy import select, func
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.auth import Role, RolePermission
-from backend.app.repositories.base import BaseRepository
+from app.models.auth import Role, RolePermission
+from app.repositories.base import BaseRepository
 
 
 class RoleRepository(BaseRepository[Role]):

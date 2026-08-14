@@ -10,7 +10,7 @@ from sqlalchemy import (
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.app.models.base import Base
+from app.models.base import Base
 
 
 class User(Base):
@@ -27,10 +27,10 @@ class User(Base):
     lastLogin: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
     photo: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     preferences: Mapped[Optional[str]] = mapped_column(Text, nullable=True)  # JSON formatted preferences
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True),
-        server_default=func.now(),
+        default=func.now(), server_default=func.now(),
         onupdate=func.now(),
         nullable=False,
     )
@@ -48,10 +48,10 @@ class Role(Base):
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     name: Mapped[str] = mapped_column(String(100), unique=True, index=True, nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True),
-        server_default=func.now(),
+        default=func.now(), server_default=func.now(),
         onupdate=func.now(),
         nullable=False,
     )
@@ -112,9 +112,9 @@ class UserSession(Base):
     browser: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     os: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     ipAddress: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    lastActive: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    lastActive: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     expiresAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), nullable=False)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
 
     # Relationships
     user: Mapped["User"] = relationship("User", back_populates="sessions")
@@ -134,7 +134,7 @@ class AuditLog(Base):
     device: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     browser: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     remarks: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
 
     # Relationships
     user: Mapped[Optional["User"]] = relationship("User", back_populates="auditLogs")

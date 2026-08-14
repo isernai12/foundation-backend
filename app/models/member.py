@@ -3,7 +3,7 @@ import datetime
 from typing import List, Optional
 from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.app.models.base import Base
+from app.models.base import Base
 
 
 class Member(Base):
@@ -47,9 +47,9 @@ class Member(Base):
     position: Mapped[Optional[str]] = mapped_column(String(50), default="GENERAL_MEMBER", nullable=True)
     paidUntilMonth: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     paidUntilYear: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime(timezone=True), default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False
     )
     createdBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     updatedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
@@ -73,7 +73,7 @@ class MemberStatusHistory(Base):
     reason: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     changedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
-    changedAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    changedAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
 
     # Relationships
     member: Mapped["Member"] = relationship("Member", back_populates="statusHistory")

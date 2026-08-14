@@ -2,10 +2,10 @@ import datetime
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.loan import Loan, LoanRepayment
-from backend.app.models.member import Member
-from backend.app.models.beneficiary import Beneficiary
-from backend.app.schemas.loan import (
+from app.models.loan import Loan, LoanRepayment
+from app.models.member import Member
+from app.models.beneficiary import Beneficiary
+from app.schemas.loan import (
     QardHasanaCreateRequest,
     QardHasanaUpdateRequest,
     QardHasanaResponse,
@@ -15,7 +15,7 @@ from backend.app.schemas.loan import (
     QardHasanaLedgerItem,
     QardHasanaLedgerResponse,
 )
-from backend.app.repositories import (
+from app.repositories import (
     loan_repo,
     member_repo,
     beneficiary_repo,

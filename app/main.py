@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app.core.config import settings
-from backend.app.core.logging import setup_logging
-from backend.app.core.database import engine, check_db_health
-from backend.app.core.errors import register_exception_handlers
-from backend.app.api.router import api_router
-from backend.app.schemas.common import HealthResponse, DatabaseHealthResponse
+from app.core.config import settings
+from app.core.logging import setup_logging
+from app.core.database import engine, check_db_health
+from app.core.errors import register_exception_handlers
+from app.api.router import api_router
+from app.schemas.common import HealthResponse, DatabaseHealthResponse
 
 
 @asynccontextmanager

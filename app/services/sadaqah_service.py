@@ -2,17 +2,17 @@ import datetime
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.ledger import LedgerTransaction, LedgerEntry
-from backend.app.models.member import Member
-from backend.app.models.donor import Donor
-from backend.app.models.fund import Fund
-from backend.app.models.organization import Group
-from backend.app.schemas.sadaqah import (
+from app.models.ledger import LedgerTransaction, LedgerEntry
+from app.models.member import Member
+from app.models.donor import Donor
+from app.models.fund import Fund
+from app.models.organization import Group
+from app.schemas.sadaqah import (
     SadaqahReceiveRequest,
     SadaqahResponse,
     SadaqahListResponse,
 )
-from backend.app.repositories import (
+from app.repositories import (
     ledger_repo,
     member_repo,
     donor_repo,

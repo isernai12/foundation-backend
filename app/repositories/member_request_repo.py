@@ -3,8 +3,8 @@ import datetime
 from typing import Optional, List, Tuple, Set
 from sqlalchemy import select, or_, func, and_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.member_request import MemberRequest
-from backend.app.repositories.base import BaseRepository
+from app.models.member_request import MemberRequest
+from app.repositories.base import BaseRepository
 
 
 class MemberRequestRepository(BaseRepository[MemberRequest]):

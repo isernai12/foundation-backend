@@ -1,4 +1,4 @@
-from backend.app.schemas.auth import (
+from app.schemas.auth import (
     LoginRequest,
     RoleInfo,
     UserProfile,

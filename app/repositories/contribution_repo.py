@@ -2,9 +2,9 @@ import datetime
 from typing import Optional, List, Tuple, Dict, Any
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.contribution import MonthlyContribution, ContributionPayment
-from backend.app.models.member import Member
-from backend.app.repositories.base import BaseRepository
+from app.models.contribution import MonthlyContribution, ContributionPayment
+from app.models.member import Member
+from app.repositories.base import BaseRepository
 
 
 class ContributionRepository(BaseRepository[MonthlyContribution]):

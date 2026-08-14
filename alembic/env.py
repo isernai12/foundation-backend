@@ -12,8 +12,8 @@ backend_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..
 if backend_root not in sys.path:
     sys.path.insert(0, backend_root)
 
-from backend.app.core.config import settings
-from backend.app.models import Base
+from app.core.config import settings
+from app.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

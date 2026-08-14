@@ -1,17 +1,17 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.dues import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.dues import (
     SingleDuePayRequest,
     MultiMonthDuePayRequest,
     DuePaymentResponse,
     MemberDuesSummaryResponse,
     MemberDuesLedgerResponse,
 )
-from backend.app.services.dues_service import dues_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.dues_service import dues_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(tags=["Monthly Dues & Contributions"])
 

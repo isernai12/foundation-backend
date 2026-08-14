@@ -2,11 +2,11 @@ import datetime
 from typing import Optional, List, Tuple, Dict, Any
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.ledger import LedgerTransaction, LedgerEntry
-from backend.app.models.fund import Fund
-from backend.app.models.member import Member
-from backend.app.models.donor import Donor
-from backend.app.repositories.base import BaseRepository
+from app.models.ledger import LedgerTransaction, LedgerEntry
+from app.models.fund import Fund
+from app.models.member import Member
+from app.models.donor import Donor
+from app.repositories.base import BaseRepository
 
 
 class LedgerRepository(BaseRepository[LedgerTransaction]):

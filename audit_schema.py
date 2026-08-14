@@ -12,8 +12,8 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from sqlalchemy import inspect, text
-from backend.app.core.database import engine, check_database_connection
-from backend.app.core.config import settings
+from app.core.database import engine, check_database_connection
+from app.core.config import settings
 
 
 def run_schema_audit() -> dict:

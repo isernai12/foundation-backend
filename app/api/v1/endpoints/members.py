@@ -1,16 +1,16 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.member import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.member import (
     MemberCreateRequest,
     MemberUpdateRequest,
     MemberDetailResponse,
     MemberListResponse,
 )
-from backend.app.services.member_service import member_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.member_service import member_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/members", tags=["Members"])
 

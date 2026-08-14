@@ -3,8 +3,8 @@ from typing import List, Optional, Dict
 from sqlalchemy import select, func, and_
 from sqlalchemy.orm import Session, joinedload
 from fastapi import HTTPException, status
-from backend.app.models.auth import Role, Permission, RolePermission, User
-from backend.app.schemas.role import (
+from app.models.auth import Role, Permission, RolePermission, User
+from app.schemas.role import (
     PermissionItem,
     RoleCreateRequest,
     RoleUpdateRequest,
@@ -12,9 +12,9 @@ from backend.app.schemas.role import (
     RoleListResponse,
     PermissionListResponse,
 )
-from backend.app.rbac.service import is_super_admin
-from backend.app.rbac.registry import PERMISSION_REGISTRY, SYSTEM_MODULES
-from backend.app.repositories import audit_repo
+from app.rbac.service import is_super_admin
+from app.rbac.registry import PERMISSION_REGISTRY, SYSTEM_MODULES
+from app.repositories import audit_repo
 
 
 def get_permission_metadata_map() -> Dict[str, dict]:

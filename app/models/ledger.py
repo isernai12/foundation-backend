@@ -3,7 +3,7 @@ import datetime
 from typing import List, Optional
 from sqlalchemy import String, Integer, Boolean, DateTime, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.app.models.base import Base
+from app.models.base import Base
 
 
 class LedgerTransaction(Base):
@@ -17,9 +17,9 @@ class LedgerTransaction(Base):
     donorId: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("Donor.id", ondelete="SET NULL"), nullable=True, index=True)
     status: Mapped[str] = mapped_column(String(50), default="COMPLETED", nullable=False)
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime(timezone=True), default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False
     )
     createdBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     updatedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
@@ -41,9 +41,9 @@ class LedgerEntry(Base):
     groupId: Mapped[Optional[str]] = mapped_column(String(36), nullable=True, index=True)
     groupCode: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     groupName: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime(timezone=True), default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False
     )
     createdBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     updatedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)

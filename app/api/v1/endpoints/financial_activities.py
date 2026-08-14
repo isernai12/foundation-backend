@@ -1,9 +1,9 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.financial_activity import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.financial_activity import (
     FinancialActivityCreate,
     FinancialActivityUpdate,
     FinancialActivityResponse,
@@ -12,8 +12,8 @@ from backend.app.schemas.financial_activity import (
     FinancialActivityDisburseRequest,
     FinancialActivityLedgerResponse,
 )
-from backend.app.services.financial_activity_service import financial_activity_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.financial_activity_service import financial_activity_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/financial-activities", tags=["Financial Activities & Campaigns"])
 

@@ -1,16 +1,16 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.beneficiary import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.beneficiary import (
     BeneficiaryCreateRequest,
     BeneficiaryUpdateRequest,
     BeneficiaryResponse,
     BeneficiaryListResponse,
 )
-from backend.app.services.beneficiary_service import beneficiary_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.beneficiary_service import beneficiary_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/beneficiaries", tags=["Beneficiaries"])
 

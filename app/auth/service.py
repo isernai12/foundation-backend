@@ -3,11 +3,11 @@ import uuid
 from typing import Optional, Dict, Any, Tuple
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.core.config import settings
-from backend.app.models.auth import User
-from backend.app.schemas.auth import UserProfile, TokenResponse
-from backend.app.repositories import user_repo, session_repo, audit_repo
-from backend.app.auth.security import (
+from app.core.config import settings
+from app.models.auth import User
+from app.schemas.auth import UserProfile, TokenResponse
+from app.repositories import user_repo, session_repo, audit_repo
+from app.auth.security import (
     verify_password,
     create_access_token,
     parse_user_agent,

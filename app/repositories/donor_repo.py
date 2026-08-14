@@ -2,8 +2,8 @@ import re
 from typing import Optional, List, Tuple
 from sqlalchemy import select, func, or_
 from sqlalchemy.orm import Session
-from backend.app.models.donor import Donor
-from backend.app.repositories.base import BaseRepository
+from app.models.donor import Donor
+from app.repositories.base import BaseRepository
 
 
 class DonorRepository(BaseRepository[Donor]):

@@ -1,5 +1,5 @@
 """Schemas package."""
-from backend.app.schemas.common import (
+from app.schemas.common import (
     HealthResponse,
     DatabaseHealthResponse,
     ErrorDetail,
@@ -7,7 +7,7 @@ from backend.app.schemas.common import (
     PaginationParams,
     PaginatedResponse,
 )
-from backend.app.schemas.auth import (
+from app.schemas.auth import (
     LoginRequest,
     RoleInfo,
     UserProfile,
@@ -15,7 +15,7 @@ from backend.app.schemas.auth import (
     SessionInfo,
     LogoutResponse,
 )
-from backend.app.schemas.member import (
+from app.schemas.member import (
     ReferenceInfo,
     DocumentItem,
     GroupSummary,
@@ -27,7 +27,7 @@ from backend.app.schemas.member import (
     MemberStatusHistoryResponse,
     DocumentResponse,
 )
-from backend.app.schemas.member_request import (
+from app.schemas.member_request import (
     MemberRequestCreate,
     MemberRequestApprove,
     MemberRequestReject,
@@ -36,25 +36,25 @@ from backend.app.schemas.member_request import (
     MemberRequestDetailResponse,
     MemberRequestListResponse,
 )
-from backend.app.schemas.group import (
+from app.schemas.group import (
     GroupCreateRequest,
     GroupUpdateRequest,
     GroupResponse,
     GroupListResponse,
 )
-from backend.app.schemas.fund import (
+from app.schemas.fund import (
     FundCreateRequest,
     FundUpdateRequest,
     FundResponse,
     FundListResponse,
 )
-from backend.app.schemas.sadaqah import (
+from app.schemas.sadaqah import (
     DonorCreateNested,
     SadaqahReceiveRequest,
     SadaqahResponse,
     SadaqahListResponse,
 )
-from backend.app.schemas.dues import (
+from app.schemas.dues import (
     SingleDuePayRequest,
     MultiMonthDuePayRequest,
     PaidMonthDetail,
@@ -63,7 +63,7 @@ from backend.app.schemas.dues import (
     MemberDuesLedgerItem,
     MemberDuesLedgerResponse,
 )
-from backend.app.schemas.financial_activity import (
+from app.schemas.financial_activity import (
     FinancialActivityCreate,
     FinancialActivityUpdate,
     FinancialActivityResponse,
@@ -73,7 +73,7 @@ from backend.app.schemas.financial_activity import (
     FinancialActivityLedgerEntryItem,
     FinancialActivityLedgerResponse,
 )
-from backend.app.schemas.loan import (
+from app.schemas.loan import (
     QardHasanaCreateRequest,
     QardHasanaUpdateRequest,
     QardHasanaResponse,
@@ -83,18 +83,18 @@ from backend.app.schemas.loan import (
     QardHasanaLedgerItem,
     QardHasanaLedgerResponse,
 )
-from backend.app.schemas.beneficiary import (
+from app.schemas.beneficiary import (
     BeneficiaryCreateRequest,
     BeneficiaryUpdateRequest,
     BeneficiaryResponse,
     BeneficiaryListResponse,
 )
-from backend.app.schemas.reports import (
+from app.schemas.reports import (
     FinancialDomainSummary,
     GroupFinancialSummaryItem,
     FinancialReportSummaryResponse,
 )
-from backend.app.schemas.role import (
+from app.schemas.role import (
     PermissionItem,
     RoleCreateRequest,
     RoleUpdateRequest,

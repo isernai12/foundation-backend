@@ -2,17 +2,17 @@ import datetime
 from typing import List
 from sqlalchemy import select, func, and_
 from sqlalchemy.orm import Session
-from backend.app.models.contribution import ContributionPayment
-from backend.app.models.ledger import LedgerTransaction, LedgerEntry
-from backend.app.models.campaign import CampaignContribution, BeneficiaryPayment
-from backend.app.models.loan import Loan, LoanRepayment
-from backend.app.models.organization import Group
-from backend.app.schemas.reports import (
+from app.models.contribution import ContributionPayment
+from app.models.ledger import LedgerTransaction, LedgerEntry
+from app.models.campaign import CampaignContribution, BeneficiaryPayment
+from app.models.loan import Loan, LoanRepayment
+from app.models.organization import Group
+from app.schemas.reports import (
     FinancialDomainSummary,
     GroupFinancialSummaryItem,
     FinancialReportSummaryResponse,
 )
-from backend.app.repositories import group_repo, fund_repo
+from app.repositories import group_repo, fund_repo
 
 
 class ReportsService:

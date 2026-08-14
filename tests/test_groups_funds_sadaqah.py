@@ -3,11 +3,11 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Group
-from backend.app.models.member import Member
-from backend.app.models.donor import Donor
-from backend.app.models.fund import Fund
-from backend.app.models.ledger import LedgerTransaction, LedgerEntry
+from app.models.organization import Group
+from app.models.member import Member
+from app.models.donor import Donor
+from app.models.fund import Fund
+from app.models.ledger import LedgerTransaction, LedgerEntry
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:
@@ -304,7 +304,7 @@ def test_sadaqah_transaction_rollback(client: TestClient, db_session: Session):
     member = create_sample_member(client, group_id, "Rollback Member", "01788990011")
 
     # Simulate database failure right during audit log writing
-    with patch("backend.app.services.sadaqah_service.audit_repo.log", side_effect=Exception("Database lock error simulation")):
+    with patch("app.services.sadaqah_service.audit_repo.log", side_effect=Exception("Database lock error simulation")):
         res = client.post(
             "/api/v1/sadaqah",
             json={

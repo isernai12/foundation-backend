@@ -3,13 +3,13 @@ import datetime
 from typing import Optional, List, Tuple
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.campaign import Campaign, CampaignContribution, BeneficiaryPayment
-from backend.app.models.fund import Fund
-from backend.app.models.ledger import LedgerTransaction, LedgerEntry
-from backend.app.models.beneficiary import Beneficiary
-from backend.app.models.member import Member
-from backend.app.models.donor import Donor
-from backend.app.repositories.base import BaseRepository
+from app.models.campaign import Campaign, CampaignContribution, BeneficiaryPayment
+from app.models.fund import Fund
+from app.models.ledger import LedgerTransaction, LedgerEntry
+from app.models.beneficiary import Beneficiary
+from app.models.member import Member
+from app.models.donor import Donor
+from app.repositories.base import BaseRepository
 
 
 class CampaignRepository(BaseRepository[Campaign]):

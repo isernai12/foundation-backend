@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.auth import Role, Permission, RolePermission, User
+from app.models.auth import Role, Permission, RolePermission, User
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:

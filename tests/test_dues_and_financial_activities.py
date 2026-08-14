@@ -3,14 +3,14 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Group
-from backend.app.models.member import Member
-from backend.app.models.donor import Donor
-from backend.app.models.beneficiary import Beneficiary
-from backend.app.models.campaign import Campaign
-from backend.app.models.contribution import MonthlyContribution
-from backend.app.models.ledger import LedgerTransaction
-from backend.app.repositories import settings_repo
+from app.models.organization import Group
+from app.models.member import Member
+from app.models.donor import Donor
+from app.models.beneficiary import Beneficiary
+from app.models.campaign import Campaign
+from app.models.contribution import MonthlyContribution
+from app.models.ledger import LedgerTransaction
+from app.repositories import settings_repo
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:
@@ -308,7 +308,7 @@ def test_financial_activity_transaction_rollback(client: TestClient, db_session:
     act_id = res_act.json()["id"]
 
     # Simulate database error during audit log writing
-    with patch("backend.app.services.financial_activity_service.audit_repo.log", side_effect=Exception("Audit failure")):
+    with patch("app.services.financial_activity_service.audit_repo.log", side_effect=Exception("Audit failure")):
         res_inc = client.post(
             f"/api/v1/financial-activities/{act_id}/contribute",
             json={
@@ -324,7 +324,7 @@ def test_financial_activity_transaction_rollback(client: TestClient, db_session:
         assert res_inc.status_code == 500
 
     # Verify no CampaignContribution was committed
-    from backend.app.models.campaign import CampaignContribution
+    from app.models.campaign import CampaignContribution
     stmt = select(CampaignContribution).where(CampaignContribution.campaignId == act_id)
     contributions = db_session.scalars(stmt).all()
     assert len(contributions) == 0

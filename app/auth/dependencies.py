@@ -3,11 +3,11 @@ from typing import Optional
 from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from backend.app.core.config import settings
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.repositories import user_repo, session_repo
-from backend.app.auth.security import decode_access_token
+from app.core.config import settings
+from app.core.database import get_db
+from app.models.auth import User
+from app.repositories import user_repo, session_repo
+from app.auth.security import decode_access_token
 
 # Optional bearer scheme (does not auto-raise 403 so cookie fallback can be checked)
 bearer_scheme = HTTPBearer(auto_error=False)

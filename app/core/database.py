@@ -3,7 +3,7 @@ from typing import Generator, Dict, Any
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.exc import SQLAlchemyError
-from backend.app.core.config import settings
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -74,3 +74,22 @@ def check_db_health() -> Dict[str, Any]:
             "database": "unavailable",
             "detail": "Service temporarily unavailable",
         }
+
+
+def check_database_connection() -> Dict[str, Any]:
+    """
+    Executes a read-only metadata query to retrieve database name and version.
+    """
+    try:
+        with engine.connect() as connection:
+            res = connection.execute(text("SELECT current_database(), version();"))
+            row = res.mappings().one()
+            return {
+                "status": "connected",
+                "database": row["current_database"],
+                "version": row["version"],
+            }
+    except Exception as err:
+        logger.error(f"check_database_connection failed: {err}")
+        return {"status": "error", "error": str(err)}
+

@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.reports import FinancialReportSummaryResponse
-from backend.app.services.reports_service import reports_service
-from backend.app.rbac.dependencies import require_permission
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.reports import FinancialReportSummaryResponse
+from app.services.reports_service import reports_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/reports", tags=["Financial Reports"])
 

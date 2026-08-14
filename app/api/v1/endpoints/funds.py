@@ -1,16 +1,16 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.fund import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.fund import (
     FundCreateRequest,
     FundUpdateRequest,
     FundResponse,
     FundListResponse,
 )
-from backend.app.services.fund_service import fund_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.fund_service import fund_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/funds", tags=["Funds"])
 

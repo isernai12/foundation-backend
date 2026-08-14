@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Response
-from backend.app.schemas.common import HealthResponse, DatabaseHealthResponse
-from backend.app.core.database import check_db_health
+from app.schemas.common import HealthResponse, DatabaseHealthResponse
+from app.core.database import check_db_health
 
 router = APIRouter()
 

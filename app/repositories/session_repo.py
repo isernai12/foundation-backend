@@ -2,8 +2,8 @@ import datetime
 from typing import Optional, List
 from sqlalchemy import select, delete
 from sqlalchemy.orm import Session
-from backend.app.models.auth import UserSession
-from backend.app.repositories.base import BaseRepository
+from app.models.auth import UserSession
+from app.repositories.base import BaseRepository
 
 
 class SessionRepository(BaseRepository[UserSession]):

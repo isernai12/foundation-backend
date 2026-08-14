@@ -1,8 +1,8 @@
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Group
-from backend.app.models.member import Member
+from app.models.organization import Group
+from app.models.member import Member
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:

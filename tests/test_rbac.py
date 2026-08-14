@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends
 from fastapi.testclient import TestClient
-from backend.app.main import app
-from backend.app.models.auth import User
-from backend.app.rbac.dependencies import (
+from app.main import app
+from app.models.auth import User
+from app.rbac.dependencies import (
     require_super_admin,
     require_role,
     require_permission,
 )
-from backend.app.rbac.service import is_super_admin, has_permission
+from app.rbac.service import is_super_admin, has_permission
 
 # Define test router with protected endpoints to verify RBAC dependencies
 rbac_test_router = APIRouter(prefix="/test-rbac", tags=["Test RBAC"])

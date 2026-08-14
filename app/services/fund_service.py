@@ -1,14 +1,14 @@
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.fund import Fund
-from backend.app.schemas.fund import (
+from app.models.fund import Fund
+from app.schemas.fund import (
     FundCreateRequest,
     FundUpdateRequest,
     FundResponse,
     FundListResponse,
 )
-from backend.app.repositories import fund_repo, group_repo, audit_repo
+from app.repositories import fund_repo, group_repo, audit_repo
 
 
 def format_fund_response(f: Fund, db: Session) -> FundResponse:

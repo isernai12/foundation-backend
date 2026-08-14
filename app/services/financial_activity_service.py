@@ -2,9 +2,9 @@ import datetime
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.campaign import Campaign, CampaignContribution, BeneficiaryPayment
-from backend.app.models.donor import Donor
-from backend.app.schemas.financial_activity import (
+from app.models.campaign import Campaign, CampaignContribution, BeneficiaryPayment
+from app.models.donor import Donor
+from app.schemas.financial_activity import (
     FinancialActivityCreate,
     FinancialActivityUpdate,
     FinancialActivityResponse,
@@ -14,7 +14,7 @@ from backend.app.schemas.financial_activity import (
     FinancialActivityLedgerEntryItem,
     FinancialActivityLedgerResponse,
 )
-from backend.app.repositories import (
+from app.repositories import (
     campaign_repo,
     member_repo,
     donor_repo,

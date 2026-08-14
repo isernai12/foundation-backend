@@ -4,9 +4,9 @@ import datetime
 from typing import Optional, List, Tuple, Dict, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.member import Member, MemberStatusHistory
-from backend.app.models.document import Document
-from backend.app.schemas.member import (
+from app.models.member import Member, MemberStatusHistory
+from app.models.document import Document
+from app.schemas.member import (
     MemberCreateRequest,
     MemberUpdateRequest,
     MemberResponse,
@@ -17,7 +17,7 @@ from backend.app.schemas.member import (
     MemberStatusHistoryResponse,
     ReferenceInfo,
 )
-from backend.app.repositories import member_repo, group_repo, audit_repo
+from app.repositories import member_repo, group_repo, audit_repo
 
 
 def format_reference_out(ref_str: Optional[str]) -> Optional[ReferenceInfo]:

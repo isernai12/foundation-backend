@@ -1,8 +1,8 @@
 from typing import Optional
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.settings import Settings
-from backend.app.repositories.base import BaseRepository
+from app.models.settings import Settings
+from app.repositories.base import BaseRepository
 
 
 class SettingsRepository(BaseRepository[Settings]):

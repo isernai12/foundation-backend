@@ -1,7 +1,7 @@
 import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field
-from backend.app.schemas.sadaqah import DonorCreateNested
+from app.schemas.sadaqah import DonorCreateNested
 
 
 class FinancialActivityCreate(BaseModel):

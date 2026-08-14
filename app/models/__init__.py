@@ -1,6 +1,6 @@
 """Models package."""
-from backend.app.models.base import Base, TimestampMixin
-from backend.app.models.auth import (
+from app.models.base import Base, TimestampMixin
+from app.models.auth import (
     User,
     Role,
     Permission,
@@ -9,46 +9,46 @@ from backend.app.models.auth import (
     UserSession,
     AuditLog,
 )
-from backend.app.models.organization import (
+from app.models.organization import (
     Foundation,
     Group,
 )
-from backend.app.models.member import (
+from app.models.member import (
     Member,
     MemberStatusHistory,
 )
-from backend.app.models.member_request import (
+from app.models.member_request import (
     MemberRequest,
 )
-from backend.app.models.document import (
+from app.models.document import (
     Document,
 )
-from backend.app.models.fund import (
+from app.models.fund import (
     Fund,
 )
-from backend.app.models.donor import (
+from app.models.donor import (
     Donor,
 )
-from backend.app.models.ledger import (
+from app.models.ledger import (
     LedgerTransaction,
     LedgerEntry,
 )
-from backend.app.models.settings import (
+from app.models.settings import (
     Settings,
 )
-from backend.app.models.beneficiary import (
+from app.models.beneficiary import (
     Beneficiary,
 )
-from backend.app.models.contribution import (
+from app.models.contribution import (
     MonthlyContribution,
     ContributionPayment,
 )
-from backend.app.models.campaign import (
+from app.models.campaign import (
     Campaign,
     CampaignContribution,
     BeneficiaryPayment,
 )
-from backend.app.models.loan import (
+from app.models.loan import (
     Loan,
     LoanRepayment,
 )

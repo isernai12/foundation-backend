@@ -4,19 +4,19 @@ import datetime
 from typing import Optional, List, Tuple, Dict, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.member import Member
-from backend.app.models.member_request import MemberRequest
-from backend.app.models.document import Document
-from backend.app.models.auth import User
-from backend.app.schemas.member import DocumentItem, GroupSummary
-from backend.app.schemas.member_request import (
+from app.models.member import Member
+from app.models.member_request import MemberRequest
+from app.models.document import Document
+from app.models.auth import User
+from app.schemas.member import DocumentItem, GroupSummary
+from app.schemas.member_request import (
     MemberRequestCreate,
     MemberRequestSubmitResponse,
     MemberRequestStatusResponse,
     MemberRequestDetailResponse,
     MemberRequestListResponse,
 )
-from backend.app.repositories import (
+from app.repositories import (
     member_request_repo,
     member_repo,
     group_repo,

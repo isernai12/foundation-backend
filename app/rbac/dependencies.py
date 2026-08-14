@@ -1,11 +1,11 @@
 from typing import List, Callable, Sequence
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.auth.dependencies import get_current_active_user
-from backend.app.repositories import user_repo, audit_repo
-from backend.app.rbac.service import is_super_admin, has_permission
+from app.core.database import get_db
+from app.models.auth import User
+from app.auth.dependencies import get_current_active_user
+from app.repositories import user_repo, audit_repo
+from app.rbac.service import is_super_admin, has_permission
 
 
 def require_authenticated_user(

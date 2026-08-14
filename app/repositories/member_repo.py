@@ -3,10 +3,10 @@ import datetime
 from typing import Optional, List, Tuple, Dict, Any, Set
 from sqlalchemy import select, or_, func, and_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.member import Member, MemberStatusHistory
-from backend.app.models.organization import Group
-from backend.app.models.document import Document
-from backend.app.repositories.base import BaseRepository
+from app.models.member import Member, MemberStatusHistory
+from app.models.organization import Group
+from app.models.document import Document
+from app.repositories.base import BaseRepository
 
 
 class MemberRepository(BaseRepository[Member]):

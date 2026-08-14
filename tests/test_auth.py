@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from backend.app.core.config import settings
+from app.core.config import settings
 
 
 def test_login_success_with_username(client: TestClient):

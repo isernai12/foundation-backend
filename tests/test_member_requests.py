@@ -3,9 +3,9 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Group
-from backend.app.models.member import Member
-from backend.app.models.member_request import MemberRequest
+from app.models.organization import Group
+from app.models.member import Member
+from app.models.member_request import MemberRequest
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:
@@ -242,7 +242,7 @@ def test_approval_transaction_rollback(client: TestClient, db_session: Session):
     token = get_token(client, "manager")
 
     # Simulate an error right during the approval transaction
-    with patch("backend.app.services.member_request_service.audit_repo.log", side_effect=Exception("Simulated failure")):
+    with patch("app.services.member_request_service.audit_repo.log", side_effect=Exception("Simulated failure")):
         res = client.post(
             f"/api/v1/member-requests/{created['id']}/approve",
             headers={"Authorization": f"Bearer {token}"},

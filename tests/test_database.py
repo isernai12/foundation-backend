@@ -1,6 +1,6 @@
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from backend.app.core.database import engine, get_db, check_db_health
+from app.core.database import engine, get_db, check_db_health
 
 
 def test_engine_configuration():

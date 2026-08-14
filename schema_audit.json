@@ -2,13 +2,4478 @@
   "database_info": {
     "name": "neondb",
     "version": "PostgreSQL 18.4 (c9a59a4) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
-    "target": "postgresql://***:***@ep-dark-bar-azxfwau3-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+    "target": "postgresql://***:***@ep-dark-bar-azxfwau3-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb"
   },
   "schemas": [
     "information_schema",
     "public"
   ],
-  "tables": {},
+  "tables": {
+    "Foundation": {
+      "row_count": 2,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "Group": {
+      "row_count": 4,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "foundationId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "code",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "shortName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "isFoundationGroup",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "false",
+          "autoincrement": false
+        },
+        {
+          "name": "memberSignupEnabled",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "true",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Group_foundationId_fkey",
+          "constrained_columns": [
+            "foundationId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Foundation",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Group_code_key",
+          "column_names": [
+            "code"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Group_isFoundationGroup_idx",
+          "column_names": [
+            "isFoundationGroup"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "Role": {
+      "row_count": 6,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Role_name_key",
+          "column_names": [
+            "name"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "RolePermission": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "roleId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "permissionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "roleId",
+        "permissionId"
+      ],
+      "foreign_keys": [
+        {
+          "name": "RolePermission_permissionId_fkey",
+          "constrained_columns": [
+            "permissionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Permission",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "RolePermission_roleId_fkey",
+          "constrained_columns": [
+            "roleId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Role",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "Permission": {
+      "row_count": 50,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "module",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "action",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "module",
+            "action"
+          ],
+          "name": "Permission_module_action_key",
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          }
+        }
+      ],
+      "indexes": [
+        {
+          "name": "Permission_module_action_key",
+          "column_names": [
+            "module",
+            "action"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "User": {
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "username",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "password",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "roleId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "lastLogin",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "photo",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "preferences",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "User_roleId_fkey",
+          "constrained_columns": [
+            "roleId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Role",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "mobile"
+          ],
+          "name": "User_mobile_key",
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          }
+        }
+      ],
+      "indexes": [
+        {
+          "name": "User_email_key",
+          "column_names": [
+            "email"
+          ],
+          "unique": true
+        },
+        {
+          "name": "User_mobile_key",
+          "column_names": [
+            "mobile"
+          ],
+          "unique": true
+        },
+        {
+          "name": "User_username_key",
+          "column_names": [
+            "username"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "AuditLog": {
+      "row_count": 5,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "userId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "action",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "module",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "oldValue",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "newValue",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ipAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "device",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "browser",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "AuditLog_userId_fkey",
+          "constrained_columns": [
+            "userId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "User",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "Member": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fullName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fatherName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "motherName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "gender",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "dob",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nationalId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "idDocumentType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": "'NID'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "occupation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "monthlyIncome",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "bloodGroup",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "altMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "phone",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "presentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "permanentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactRelation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "joinDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "maritalStatus",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "education",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "workplace",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "designation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "skills",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "reference",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "reasonForJoining",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "participation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "declarationAccepted",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "true",
+          "autoincrement": false
+        },
+        {
+          "name": "memberType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": "'REGULAR'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "position",
+          "type": "TEXT",
+          "nullable": true,
+          "default": "'GENERAL_MEMBER'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "paidUntilMonth",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "paidUntilYear",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Member_groupId_fkey",
+          "constrained_columns": [
+            "groupId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Group",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Member_email_key",
+          "column_names": [
+            "email"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Member_memberId_key",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Member_mobile_key",
+          "column_names": [
+            "mobile"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Member_nationalId_key",
+          "column_names": [
+            "nationalId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "MemberRequest": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "applicationNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'PENDING'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "fullName",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fatherName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "motherName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "gender",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "dob",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nationalId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "idDocumentType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": "'NID'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "occupation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "monthlyIncome",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "bloodGroup",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "education",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "maritalStatus",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "altMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "phone",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "presentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "permanentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactRelation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceRelation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "reasonForJoining",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "documents",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "rejectionReason",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "adminMessage",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "approvedAt",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "approvedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdMemberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "submittedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "MemberRequest_applicationNumber_idx",
+          "column_names": [
+            "applicationNumber"
+          ],
+          "unique": false
+        },
+        {
+          "name": "MemberRequest_applicationNumber_key",
+          "column_names": [
+            "applicationNumber"
+          ],
+          "unique": true
+        },
+        {
+          "name": "MemberRequest_status_idx",
+          "column_names": [
+            "status"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "MemberStatusHistory": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fromStatus",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "toStatus",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "reason",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "changedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "changedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "MemberStatusHistory_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "MemberStatusHistory_memberId_idx",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "Settings": {
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "key",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "value",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Settings_key_key",
+          "column_names": [
+            "key"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "UserPermission": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "userId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "permissionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "userId",
+        "permissionId"
+      ],
+      "foreign_keys": [
+        {
+          "name": "UserPermission_permissionId_fkey",
+          "constrained_columns": [
+            "permissionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Permission",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "UserPermission_userId_fkey",
+          "constrained_columns": [
+            "userId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "User",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "UserSession": {
+      "row_count": 5,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "userId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "jti",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "device",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "browser",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "os",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ipAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "lastActive",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "expiresAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "UserSession_userId_fkey",
+          "constrained_columns": [
+            "userId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "User",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "UserSession_jti_key",
+          "column_names": [
+            "jti"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Donor": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "donorId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fullName",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mobile",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "address",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nationalId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Donor_donorId_key",
+          "column_names": [
+            "donorId"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Donor_mobile_key",
+          "column_names": [
+            "mobile"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Donor_nationalId_key",
+          "column_names": [
+            "nationalId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Fund": {
+      "row_count": 1,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Fund_groupId_fkey",
+          "constrained_columns": [
+            "groupId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Group",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "LedgerEntry": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "transactionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fundId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "isCredit",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupCode",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "LedgerEntry_fundId_fkey",
+          "constrained_columns": [
+            "fundId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Fund",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "LedgerEntry_transactionId_fkey",
+          "constrained_columns": [
+            "transactionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "LedgerTransaction",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "LedgerEntry_fundId_idx",
+          "column_names": [
+            "fundId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "LedgerEntry_transactionId_idx",
+          "column_names": [
+            "transactionId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "LedgerTransaction": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "date",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "type",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "donorId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'COMPLETED'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "LedgerTransaction_donorId_fkey",
+          "constrained_columns": [
+            "donorId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Donor",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        },
+        {
+          "name": "LedgerTransaction_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "LedgerTransaction_donorId_idx",
+          "column_names": [
+            "donorId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "LedgerTransaction_memberId_idx",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "MonthlyContribution": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "month",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "year",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "expectedAmount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "isAdditional",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "false",
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'PENDING'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "MonthlyContribution_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "memberId",
+            "month",
+            "year",
+            "isAdditional"
+          ],
+          "name": "MonthlyContribution_memberId_month_year_isAdditional_key",
+          "comment": null,
+          "dialect_options": {
+            "postgresql_include": [],
+            "postgresql_nulls_not_distinct": false
+          }
+        }
+      ],
+      "indexes": [
+        {
+          "name": "MonthlyContribution_memberId_month_year_isAdditional_key",
+          "column_names": [
+            "memberId",
+            "month",
+            "year",
+            "isAdditional"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Beneficiary": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fullName",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "phone",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "address",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "presentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "permanentAddress",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nationalId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "idDocumentType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": "'NID'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "fatherOrHusbandName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "occupation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "relationToMember",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "assistanceType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "assistanceReason",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryPhoto",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "businessType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactMobile",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactName",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "emergencyContactRelation",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanAmount",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanPurpose",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanReason",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nidOrBirthCertificate",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Beneficiary_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Beneficiary_beneficiaryId_key",
+          "column_names": [
+            "beneficiaryId"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Beneficiary_nationalId_key",
+          "column_names": [
+            "nationalId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Loan": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanType",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'OTHER'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "businessType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "purpose",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "requestedDate",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false
+        },
+        {
+          "name": "disbursedDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "installmentType",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "installmentAmount",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "totalInstallments",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "firstInstallmentDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "nextDueDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "totalPaidAmount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0",
+          "autoincrement": false
+        },
+        {
+          "name": "remainingBalance",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Loan_beneficiaryId_fkey",
+          "constrained_columns": [
+            "beneficiaryId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Beneficiary",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "Loan_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Loan_beneficiaryId_idx",
+          "column_names": [
+            "beneficiaryId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Loan_loanNumber_key",
+          "column_names": [
+            "loanNumber"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Loan_memberId_idx",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "LoanRepayment": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ledgerTransactionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "date",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'COMPLETED'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "installmentNo",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "paymentMethod",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'CASH'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "referenceNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "collectedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "receiptUrl",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "LoanRepayment_ledgerTransactionId_fkey",
+          "constrained_columns": [
+            "ledgerTransactionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "LedgerTransaction",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "LoanRepayment_loanId_fkey",
+          "constrained_columns": [
+            "loanId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Loan",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "LoanRepayment_ledgerTransactionId_key",
+          "column_names": [
+            "ledgerTransactionId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "BeneficiaryPayment": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "campaignId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ledgerTransactionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "date",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "reason",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "comments",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'COMPLETED'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "BeneficiaryPayment_beneficiaryId_fkey",
+          "constrained_columns": [
+            "beneficiaryId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Beneficiary",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "BeneficiaryPayment_campaignId_fkey",
+          "constrained_columns": [
+            "campaignId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Campaign",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "BeneficiaryPayment_ledgerTransactionId_fkey",
+          "constrained_columns": [
+            "ledgerTransactionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "LedgerTransaction",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "BeneficiaryPayment_beneficiaryId_idx",
+          "column_names": [
+            "beneficiaryId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "BeneficiaryPayment_campaignId_idx",
+          "column_names": [
+            "campaignId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "BeneficiaryPayment_ledgerTransactionId_key",
+          "column_names": [
+            "ledgerTransactionId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Campaign": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "campaignId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "purpose",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "targetAmount",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "startDate",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "endDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Campaign_campaignId_key",
+          "column_names": [
+            "campaignId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "CampaignContribution": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "campaignId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "donorId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ledgerTransactionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "date",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "CampaignContribution_campaignId_fkey",
+          "constrained_columns": [
+            "campaignId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Campaign",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "CampaignContribution_donorId_fkey",
+          "constrained_columns": [
+            "donorId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Donor",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        },
+        {
+          "name": "CampaignContribution_ledgerTransactionId_fkey",
+          "constrained_columns": [
+            "ledgerTransactionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "LedgerTransaction",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "CampaignContribution_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "CampaignContribution_campaignId_idx",
+          "column_names": [
+            "campaignId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "CampaignContribution_donorId_idx",
+          "column_names": [
+            "donorId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "CampaignContribution_ledgerTransactionId_key",
+          "column_names": [
+            "ledgerTransactionId"
+          ],
+          "unique": true
+        },
+        {
+          "name": "CampaignContribution_memberId_idx",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "ContributionPayment": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "monthlyContributionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "ledgerTransactionId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "paymentDate",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "paymentMethod",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "referenceNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "ContributionPayment_ledgerTransactionId_fkey",
+          "constrained_columns": [
+            "ledgerTransactionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "LedgerTransaction",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "ContributionPayment_monthlyContributionId_fkey",
+          "constrained_columns": [
+            "monthlyContributionId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "MonthlyContribution",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "ContributionPayment_ledgerTransactionId_key",
+          "column_names": [
+            "ledgerTransactionId"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "Document": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "documentNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "title",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "type",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "cloudinaryPublicId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "secureUrl",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "originalFilename",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "mimeType",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "sizeBytes",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "targetType",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "foundationId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "groupId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "memberId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "categoryId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "now()",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryPaymentId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "campaignId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "donorId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "entityId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "grantId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "remarks",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "resourceType",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'auto'::text",
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Document_beneficiaryId_fkey",
+          "constrained_columns": [
+            "beneficiaryId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Beneficiary",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_beneficiaryPaymentId_fkey",
+          "constrained_columns": [
+            "beneficiaryPaymentId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "BeneficiaryPayment",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_campaignId_fkey",
+          "constrained_columns": [
+            "campaignId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Campaign",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_categoryId_fkey",
+          "constrained_columns": [
+            "categoryId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "DocumentCategory",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "SET NULL"
+          }
+        },
+        {
+          "name": "Document_donorId_fkey",
+          "constrained_columns": [
+            "donorId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Donor",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_foundationId_fkey",
+          "constrained_columns": [
+            "foundationId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Foundation",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_grantId_fkey",
+          "constrained_columns": [
+            "grantId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Grant",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_groupId_fkey",
+          "constrained_columns": [
+            "groupId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Group",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_loanId_fkey",
+          "constrained_columns": [
+            "loanId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Loan",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "Document_memberId_fkey",
+          "constrained_columns": [
+            "memberId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Member",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Document_beneficiaryId_idx",
+          "column_names": [
+            "beneficiaryId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_beneficiaryPaymentId_idx",
+          "column_names": [
+            "beneficiaryPaymentId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_campaignId_idx",
+          "column_names": [
+            "campaignId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_documentNumber_key",
+          "column_names": [
+            "documentNumber"
+          ],
+          "unique": true
+        },
+        {
+          "name": "Document_donorId_idx",
+          "column_names": [
+            "donorId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_foundationId_idx",
+          "column_names": [
+            "foundationId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_grantId_idx",
+          "column_names": [
+            "grantId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_groupId_idx",
+          "column_names": [
+            "groupId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_loanId_idx",
+          "column_names": [
+            "loanId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_memberId_idx",
+          "column_names": [
+            "memberId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "Document_targetType_idx",
+          "column_names": [
+            "targetType"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "FundAllocation": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "fundId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "targetType",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "loanId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "grantId",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "FundAllocation_fundId_fkey",
+          "constrained_columns": [
+            "fundId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Fund",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        },
+        {
+          "name": "FundAllocation_grantId_fkey",
+          "constrained_columns": [
+            "grantId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Grant",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        },
+        {
+          "name": "FundAllocation_loanId_fkey",
+          "constrained_columns": [
+            "loanId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Loan",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "CASCADE"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "FundAllocation_fundId_idx",
+          "column_names": [
+            "fundId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "FundAllocation_grantId_idx",
+          "column_names": [
+            "grantId"
+          ],
+          "unique": false
+        },
+        {
+          "name": "FundAllocation_loanId_idx",
+          "column_names": [
+            "loanId"
+          ],
+          "unique": false
+        }
+      ]
+    },
+    "DocumentCategory": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "DocumentCategory_name_key",
+          "column_names": [
+            "name"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "SystemSettings": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "key",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "value",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "group",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "SystemSettings_key_key",
+          "column_names": [
+            "key"
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "FoundationProfile": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "logo",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "address",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "phone",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "email",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "website",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "registrationNumber",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "currency",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'USD'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "timezone",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'UTC'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "language",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'en'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'ACTIVE'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "unique_constraints": [],
+      "indexes": []
+    },
+    "Grant": {
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "grantNumber",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "beneficiaryId",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "amount",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "purpose",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "dateApproved",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "disbursedDate",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'PENDING'::text",
+          "autoincrement": false
+        },
+        {
+          "name": "notes",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false
+        },
+        {
+          "name": "updatedAt",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "createdBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        },
+        {
+          "name": "updatedBy",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false
+        }
+      ],
+      "primary_key": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "Grant_beneficiaryId_fkey",
+          "constrained_columns": [
+            "beneficiaryId"
+          ],
+          "referred_schema": "public",
+          "referred_table": "Beneficiary",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {
+            "onupdate": "CASCADE",
+            "ondelete": "RESTRICT"
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "indexes": [
+        {
+          "name": "Grant_grantNumber_key",
+          "column_names": [
+            "grantNumber"
+          ],
+          "unique": true
+        }
+      ]
+    }
+  },
   "enums": [],
-  "table_list": []
+  "table_list": [
+    "Foundation",
+    "Group",
+    "Role",
+    "RolePermission",
+    "Permission",
+    "User",
+    "AuditLog",
+    "Member",
+    "MemberRequest",
+    "MemberStatusHistory",
+    "Settings",
+    "UserPermission",
+    "UserSession",
+    "Donor",
+    "Fund",
+    "LedgerEntry",
+    "LedgerTransaction",
+    "MonthlyContribution",
+    "Beneficiary",
+    "Loan",
+    "LoanRepayment",
+    "BeneficiaryPayment",
+    "Campaign",
+    "CampaignContribution",
+    "ContributionPayment",
+    "Document",
+    "FundAllocation",
+    "DocumentCategory",
+    "SystemSettings",
+    "FoundationProfile",
+    "Grant"
+  ]
 }

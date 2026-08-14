@@ -2,10 +2,10 @@ import datetime
 from typing import Optional, List, Tuple
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.contribution import MonthlyContribution, ContributionPayment
-from backend.app.models.member import Member
-from backend.app.models.ledger import LedgerTransaction
-from backend.app.schemas.dues import (
+from app.models.contribution import MonthlyContribution, ContributionPayment
+from app.models.member import Member
+from app.models.ledger import LedgerTransaction
+from app.schemas.dues import (
     SingleDuePayRequest,
     MultiMonthDuePayRequest,
     PaidMonthDetail,
@@ -14,7 +14,7 @@ from backend.app.schemas.dues import (
     MemberDuesLedgerItem,
     MemberDuesLedgerResponse,
 )
-from backend.app.repositories import (
+from app.repositories import (
     contribution_repo,
     member_repo,
     fund_repo,

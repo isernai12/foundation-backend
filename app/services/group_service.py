@@ -1,14 +1,14 @@
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.models.organization import Group
-from backend.app.schemas.group import (
+from app.models.organization import Group
+from app.schemas.group import (
     GroupCreateRequest,
     GroupUpdateRequest,
     GroupResponse,
     GroupListResponse,
 )
-from backend.app.repositories import group_repo, audit_repo
+from app.repositories import group_repo, audit_repo
 
 
 def format_group_response(g: Group, db: Session) -> GroupResponse:

@@ -3,7 +3,7 @@ import datetime
 from typing import List, Optional
 from sqlalchemy import String, DateTime, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.app.models.base import Base
+from app.models.base import Base
 
 
 class Fund(Base):
@@ -13,9 +13,9 @@ class Fund(Base):
     groupId: Mapped[Optional[str]] = mapped_column(String(36), ForeignKey("Group.id", ondelete="RESTRICT"), nullable=True, index=True)
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    createdAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime(timezone=True), default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False
     )
     createdBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     updatedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)

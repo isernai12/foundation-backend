@@ -2,8 +2,8 @@ import datetime
 from typing import Optional, List, Set
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.auth import User, Role, Permission, RolePermission, UserPermission
-from backend.app.repositories.base import BaseRepository
+from app.models.auth import User, Role, Permission, RolePermission, UserPermission
+from app.repositories.base import BaseRepository
 
 
 class UserRepository(BaseRepository[User]):
@@ -61,7 +61,7 @@ class UserRepository(BaseRepository[User]):
             return []
 
         # Super Admin check is handled in RBAC service (returns wildcard ['*'])
-        from backend.app.rbac.service import is_super_admin
+        from app.rbac.service import is_super_admin
         if is_super_admin(user.role.name):
             return ["*"]
 

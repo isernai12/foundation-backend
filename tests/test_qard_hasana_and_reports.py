@@ -3,10 +3,10 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Group
-from backend.app.models.member import Member
-from backend.app.models.beneficiary import Beneficiary
-from backend.app.models.loan import Loan, LoanRepayment
+from app.models.organization import Group
+from app.models.member import Member
+from app.models.beneficiary import Beneficiary
+from app.models.loan import Loan, LoanRepayment
 
 
 def get_token(client: TestClient, username: str = "manager") -> str:
@@ -176,7 +176,7 @@ def test_qard_hasana_transaction_rollback(client: TestClient, db_session: Sessio
     member = create_sample_member(client, group_id, "Rollback Loan Member", "01799887766")
 
     # Simulate database error during audit log writing
-    with patch("backend.app.services.loan_service.audit_repo.log", side_effect=Exception("Database lock error simulation")):
+    with patch("app.services.loan_service.audit_repo.log", side_effect=Exception("Database lock error simulation")):
         res = client.post(
             "/api/v1/qard-e-hasana",
             json={

@@ -3,7 +3,7 @@ import datetime
 from typing import Optional, Dict, Any
 import bcrypt
 import jwt
-from backend.app.core.config import settings
+from app.core.config import settings
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

@@ -1,10 +1,10 @@
 from typing import Optional, List, Tuple
 from sqlalchemy import select, func, and_, or_
 from sqlalchemy.orm import Session, joinedload
-from backend.app.models.fund import Fund
-from backend.app.models.organization import Group
-from backend.app.models.ledger import LedgerEntry
-from backend.app.repositories.base import BaseRepository
+from app.models.fund import Fund
+from app.models.organization import Group
+from app.models.ledger import LedgerEntry
+from app.repositories.base import BaseRepository
 
 
 class FundRepository(BaseRepository[Fund]):

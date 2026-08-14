@@ -1,17 +1,17 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.orm import Session
-from backend.app.core.config import settings
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.auth import (
+from app.core.config import settings
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.auth import (
     LoginRequest,
     TokenResponse,
     UserProfile,
     LogoutResponse,
 )
-from backend.app.auth.service import auth_service
-from backend.app.auth.dependencies import get_current_active_user
+from app.auth.service import auth_service
+from app.auth.dependencies import get_current_active_user
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 

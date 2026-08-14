@@ -3,15 +3,15 @@ from typing import Optional, List
 from sqlalchemy import select, func, or_, and_
 from sqlalchemy.orm import Session, joinedload
 from fastapi import HTTPException, status
-from backend.app.models.beneficiary import Beneficiary
-from backend.app.models.member import Member
-from backend.app.schemas.beneficiary import (
+from app.models.beneficiary import Beneficiary
+from app.models.member import Member
+from app.schemas.beneficiary import (
     BeneficiaryCreateRequest,
     BeneficiaryUpdateRequest,
     BeneficiaryResponse,
     BeneficiaryListResponse,
 )
-from backend.app.repositories import beneficiary_repo, member_repo, audit_repo
+from app.repositories import beneficiary_repo, member_repo, audit_repo
 
 
 def format_beneficiary_response(b: Beneficiary) -> BeneficiaryResponse:

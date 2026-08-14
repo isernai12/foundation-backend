@@ -3,7 +3,7 @@ import datetime
 from typing import Optional
 from sqlalchemy import String, Integer, DateTime, ForeignKey, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from backend.app.models.base import Base
+from app.models.base import Base
 
 
 class MemberRequest(Base):
@@ -59,9 +59,9 @@ class MemberRequest(Base):
     approvedBy: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     createdMemberId: Mapped[Optional[str]] = mapped_column(String(36), nullable=True)
 
-    submittedAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    submittedAt: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=func.now(), server_default=func.now(), nullable=False)
     updatedAt: Mapped[datetime.datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+        DateTime(timezone=True), default=func.now(), server_default=func.now(), onupdate=func.now(), nullable=False
     )
 
     # Relationships

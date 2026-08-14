@@ -2,10 +2,10 @@ import datetime
 from typing import Optional, List, Tuple
 from sqlalchemy import select, func, or_, and_
 from sqlalchemy.orm import Session
-from backend.app.models.organization import Foundation, Group
-from backend.app.models.member import Member
-from backend.app.models.ledger import LedgerEntry
-from backend.app.repositories.base import BaseRepository
+from app.models.organization import Foundation, Group
+from app.models.member import Member
+from app.models.ledger import LedgerEntry
+from app.repositories.base import BaseRepository
 
 
 class GroupRepository(BaseRepository[Group]):

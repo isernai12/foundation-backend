@@ -1,16 +1,16 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.group import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.group import (
     GroupCreateRequest,
     GroupUpdateRequest,
     GroupResponse,
     GroupListResponse,
 )
-from backend.app.services.group_service import group_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.group_service import group_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/groups", tags=["Groups / Villages"])
 

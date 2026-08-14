@@ -1,9 +1,9 @@
 from typing import Optional
 from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.models.auth import User
-from backend.app.schemas.loan import (
+from app.core.database import get_db
+from app.models.auth import User
+from app.schemas.loan import (
     QardHasanaCreateRequest,
     QardHasanaUpdateRequest,
     QardHasanaResponse,
@@ -12,8 +12,8 @@ from backend.app.schemas.loan import (
     RepaymentResponse,
     QardHasanaLedgerResponse,
 )
-from backend.app.services.loan_service import loan_service
-from backend.app.rbac.dependencies import require_permission
+from app.services.loan_service import loan_service
+from app.rbac.dependencies import require_permission
 
 router = APIRouter(prefix="/qard-e-hasana", tags=["Qard-e-Hasana (কর্জে হাসানা / Interest-free Loans)"])
 

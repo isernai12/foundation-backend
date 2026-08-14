@@ -1,6 +1,6 @@
 import re
 from typing import List, Optional
-from backend.app.rbac.constants import SUPER_ADMIN_ROLE_NAMES
+from app.rbac.constants import SUPER_ADMIN_ROLE_NAMES
 
 
 def is_super_admin(role_name: Optional[str]) -> bool:
