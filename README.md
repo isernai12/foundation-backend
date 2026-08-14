@@ -46,6 +46,7 @@ The **Foundation ERP Backend** is a modular RESTful web service that handles all
 │   ├── api/                      # REST API routing layer
 │   │   ├── v1/                   # Version 1 API endpoints
 │   │   │   ├── endpoints/        # Feature-specific route handlers
+│   │   │   │   ├── upload.py             # Cloudinary media upload (images/PDFs) & deletions
 │   │   │   │   ├── members.py            # Members CRUD, profile, and dues status
 │   │   │   │   ├── member_requests.py    # Public registration and review workflows
 │   │   │   │   ├── groups.py             # Foundation groups and group ledgers
@@ -223,6 +224,15 @@ DATABASE_URL=postgresql+psycopg://user:password@localhost:5432/foundation_db
 # =============================================================================
 # Comma-separated list of allowed frontend origins
 CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,https://your-frontend.vercel.app
+
+# =============================================================================
+# Cloudinary CDN Configuration (Media Storage)
+# =============================================================================
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
+CLOUDINARY_FOLDER=foundation-erp
 ```
 
 ---

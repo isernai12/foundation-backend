@@ -13,10 +13,20 @@ from app.api.v1.endpoints.beneficiaries import router as beneficiaries_router
 from app.api.v1.endpoints.reports import router as reports_router
 from app.api.v1.endpoints.roles import router as roles_router
 from app.api.v1.endpoints.permissions import router as permissions_router
+from app.api.v1.endpoints.upload import router as upload_router
+from app.api.v1.endpoints.audit_logs import router as audit_logs_router
+from app.api.v1.endpoints.settings import router as settings_router
+from app.api.v1.endpoints.users import router as users_router
+from app.api.v1.endpoints.donors import router as donors_router
 
 api_v1_router = APIRouter()
 api_v1_router.include_router(health.router)
 api_v1_router.include_router(auth_router)
+api_v1_router.include_router(upload_router)
+api_v1_router.include_router(audit_logs_router)
+api_v1_router.include_router(settings_router)
+api_v1_router.include_router(users_router)
+api_v1_router.include_router(donors_router)
 api_v1_router.include_router(members_router)
 api_v1_router.include_router(member_requests_router)
 api_v1_router.include_router(groups_router)

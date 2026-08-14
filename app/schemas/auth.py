@@ -49,3 +49,24 @@ class SessionInfo(BaseModel):
 class LogoutResponse(BaseModel):
     status: str = "ok"
     message: str = "Successfully logged out"
+
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(..., description="Current password for verification")
+    new_password: str = Field(..., min_length=6, description="New password")
+
+
+class UpdateProfileRequest(BaseModel):
+    name: Optional[str] = None
+    mobile: Optional[str] = None
+    email: Optional[str] = None
+    photo: Optional[str] = None
+
+
+class UpdatePreferencesRequest(BaseModel):
+    preferences: str = Field(..., description="JSON serialized preferences string")
+
+
+class SessionListResponse(BaseModel):
+    sessions: List[SessionInfo]
+    current_jti: Optional[str] = None

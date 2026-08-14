@@ -1,17 +1,25 @@
 from typing import Optional
-from fastapi import APIRouter, Depends, Request, Response, status
+from fastapi import APIRouter, Depends, Request, Response, HTTPException, status
+from sqlalchemy import delete
 from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.database import get_db
-from app.models.auth import User
+from app.models.auth import User, UserSession
 from app.schemas.auth import (
     LoginRequest,
     TokenResponse,
     UserProfile,
     LogoutResponse,
+    SessionInfo,
+    SessionListResponse,
+    ChangePasswordRequest,
+    UpdateProfileRequest,
+    UpdatePreferencesRequest,
 )
 from app.auth.service import auth_service
 from app.auth.dependencies import get_current_active_user
+from app.repositories import session_repo, audit_repo
+from app.auth.security import verify_password, get_password_hash
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -104,7 +112,6 @@ def get_me(
 ) -> UserProfile:
     profile = auth_service.get_user_profile(db, current_user.id)
     if not profile:
-        # Fallback
         return UserProfile(
             id=current_user.id,
             name=current_user.name,
@@ -118,3 +125,137 @@ def get_me(
             permissions=[],
         )
     return profile
+
+
+@router.get(
+    "/devices",
+    response_model=SessionListResponse,
+    status_code=status.HTTP_200_OK,
+    summary="List Active User Devices",
+    description="Returns all active sessions and device information for the current user.",
+)
+def get_active_devices(
+    request: Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> SessionListResponse:
+    sessions = session_repo.get_active_user_sessions(db, current_user.id)
+    current_jti: Optional[str] = getattr(request.state, "session_jti", None)
+    items = [
+        SessionInfo(
+            id=s.id,
+            jti=s.jti,
+            device=s.device,
+            browser=s.browser,
+            os=s.os,
+            ip_address=s.ipAddress,
+            last_active=s.lastActive,
+            expires_at=s.expiresAt,
+        )
+        for s in sessions
+    ]
+    return SessionListResponse(sessions=items, current_jti=current_jti)
+
+
+@router.delete(
+    "/devices/{jti}",
+    response_model=LogoutResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Revoke Specific Device Session",
+)
+def revoke_device(
+    jti: str,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> LogoutResponse:
+    session_repo.delete_by_jti(db, jti)
+    return LogoutResponse(status="ok", message=f"Session {jti} revoked")
+
+
+@router.delete(
+    "/devices",
+    response_model=LogoutResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Revoke All Other User Sessions",
+)
+def revoke_other_devices(
+    request: Request,
+    all_devices: bool = False,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> LogoutResponse:
+    current_jti: Optional[str] = getattr(request.state, "session_jti", None)
+    if all_devices:
+        session_repo.delete_user_sessions(db, current_user.id)
+    elif current_jti:
+        stmt = delete(UserSession).where(
+            UserSession.userId == current_user.id,
+            UserSession.jti != current_jti,
+        )
+        db.execute(stmt)
+        db.commit()
+    return LogoutResponse(status="ok", message="Sessions revoked successfully")
+
+
+@router.post(
+    "/change-password",
+    response_model=LogoutResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Change User Password",
+)
+def change_password(
+    data: ChangePasswordRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> LogoutResponse:
+    if not verify_password(data.current_password, current_user.password):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Current password is incorrect.",
+        )
+    current_user.password = get_password_hash(data.new_password)
+    session_repo.delete_user_sessions(db, current_user.id)
+    audit_repo.log(db, action="CHANGE_PASSWORD", module="AUTHENTICATION", user_id=current_user.id)
+    db.commit()
+    return LogoutResponse(status="ok", message="Password changed successfully. Please log in again.")
+
+
+@router.patch(
+    "/preferences",
+    response_model=UserProfile,
+    status_code=status.HTTP_200_OK,
+    summary="Update User Preferences",
+)
+def update_preferences(
+    data: UpdatePreferencesRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> UserProfile:
+    current_user.preferences = data.preferences
+    db.commit()
+    db.refresh(current_user)
+    return get_me(current_user, db)
+
+
+@router.patch(
+    "/profile",
+    response_model=UserProfile,
+    status_code=status.HTTP_200_OK,
+    summary="Update Profile Details",
+)
+def update_profile(
+    data: UpdateProfileRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+) -> UserProfile:
+    if data.name is not None:
+        current_user.name = data.name.strip()
+    if data.mobile is not None:
+        current_user.mobile = data.mobile.strip() or None
+    if data.email is not None:
+        current_user.email = data.email.strip() or None
+    if data.photo is not None:
+        current_user.photo = data.photo.strip() or None
+    db.commit()
+    db.refresh(current_user)
+    return get_me(current_user, db)

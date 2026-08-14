@@ -11,6 +11,7 @@ from app.schemas.reports import (
     FinancialDomainSummary,
     GroupFinancialSummaryItem,
     FinancialReportSummaryResponse,
+    DashboardStatsResponse,
 )
 from app.repositories import group_repo, fund_repo
 
@@ -145,6 +146,117 @@ class ReportsService:
             generated_at=datetime.datetime.now(datetime.timezone.utc),
             overall=overall,
             groups=group_items,
+        )
+
+    def get_dashboard_stats(self, db: Session) -> DashboardStatsResponse:
+        from app.models.membership import Member
+        from app.models.organization import Group
+        from app.models.beneficiary import Beneficiary
+        from app.models.grant import Grant
+        from app.models.loan import Loan, LoanRepayment
+        from app.models.contribution import MonthlyContribution
+        from app.schemas.reports import DashboardStatsResponse, GroupDistributionItem, MonthlyChartItem
+
+        # 1. Member counts
+        stmt_active = select(func.count(Member.id)).where(Member.status == "ACTIVE")
+        stmt_total_m = select(func.count(Member.id))
+        total_members = db.scalar(stmt_total_m) or 0
+        active_members = db.scalar(stmt_active) or 0
+        inactive_members = max(0, total_members - active_members)
+
+        # 2. Counts
+        total_groups = db.scalar(select(func.count(Group.id))) or 0
+        total_beneficiaries = db.scalar(select(func.count(Beneficiary.id))) or 0
+        total_grants = db.scalar(select(func.count(Grant.id))) or 0
+        total_active_loans = db.scalar(select(func.count(Loan.id)).where(Loan.status == "ACTIVE")) or 0
+
+        # 3. Loan totals
+        total_loan_amount = db.scalar(
+            select(func.coalesce(func.sum(Loan.amount), 0)).where(Loan.status.in_(["ACTIVE", "DEFAULTED"]))
+        ) or 0
+        total_repaid = db.scalar(
+            select(func.coalesce(func.sum(LoanRepayment.amount), 0))
+            .join(LoanRepayment.loan)
+            .where(Loan.status.in_(["ACTIVE", "DEFAULTED"]))
+        ) or 0
+        outstanding_loan_amount = max(0, total_loan_amount - total_repaid)
+
+        # 4. Total contributions
+        total_contrib = db.scalar(
+            select(func.coalesce(func.sum(MonthlyContribution.expectedAmount), 0)).where(
+                MonthlyContribution.status == "PAID"
+            )
+        ) or 0
+
+        # 5. Financial summaries & group balances
+        groups = db.scalars(select(Group).order_by(Group.isFoundationGroup.desc(), Group.name.asc())).all()
+        group_distribution = []
+        total_group_funds = 0
+        current_cash_balance = 0
+
+        for g in groups:
+            bal = group_repo.get_group_balance(db, g.id)
+            if g.isFoundationGroup:
+                current_cash_balance = bal
+            else:
+                total_group_funds += bal
+                group_distribution.append(GroupDistributionItem(name=g.name, value=bal))
+
+        # 6. Monthly chart data (last 6 months)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        six_months_ago = now - datetime.timedelta(days=180)
+
+        month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        month_map = {}
+        for i in range(5, -1, -1):
+            d = now - datetime.timedelta(days=i * 30)
+            m_name = month_names[d.month - 1]
+            month_map[m_name] = MonthlyChartItem(month=m_name, contributions=0, loans=0, grants=0)
+
+        contribs = db.execute(
+            select(MonthlyContribution.expectedAmount, MonthlyContribution.createdAt).where(
+                and_(MonthlyContribution.status == "PAID", MonthlyContribution.createdAt >= six_months_ago)
+            )
+        ).all()
+        for c_amount, c_date in contribs:
+            if c_date:
+                m_name = month_names[c_date.month - 1]
+                if m_name in month_map:
+                    month_map[m_name].contributions += c_amount or 0
+
+        loans = db.execute(
+            select(Loan.amount, Loan.createdAt).where(Loan.createdAt >= six_months_ago)
+        ).all()
+        for l_amount, l_date in loans:
+            if l_date:
+                m_name = month_names[l_date.month - 1]
+                if m_name in month_map:
+                    month_map[m_name].loans += l_amount or 0
+
+        grants = db.execute(
+            select(Grant.amount, Grant.createdAt).where(Grant.createdAt >= six_months_ago)
+        ).all()
+        for g_amount, g_date in grants:
+            if g_date:
+                m_name = month_names[g_date.month - 1]
+                if m_name in month_map:
+                    month_map[m_name].grants += g_amount or 0
+
+        return DashboardStatsResponse(
+            totalMembers=total_members,
+            activeMembers=active_members,
+            inactiveMembers=inactive_members,
+            totalGroups=total_groups,
+            foundationTotalFund=current_cash_balance,
+            totalGroupFunds=total_group_funds,
+            currentCashBalance=current_cash_balance,
+            totalContributions=total_contrib,
+            totalActiveLoans=total_active_loans,
+            outstandingLoanAmount=outstanding_loan_amount,
+            totalGrants=total_grants,
+            totalBeneficiaries=total_beneficiaries,
+            groupFundDistribution=group_distribution,
+            monthlyChartData=list(month_map.values()),
         )
 
 
