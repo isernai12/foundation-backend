@@ -41,7 +41,7 @@ The **Foundation ERP Backend** is a modular RESTful web service that handles all
 ## 3. Project Structure
 
 ```text
-backend/
+.
 ├── app/
 │   ├── api/                      # REST API routing layer
 │   │   ├── v1/                   # Version 1 API endpoints
@@ -190,7 +190,7 @@ python audit_schema.py
 
 ## 6. Environment Variables
 
-Create a `.env` file in the `/backend` directory based on `.env.example`:
+Create a `.env` file in the project root based on `.env.example`:
 
 ```env
 # =============================================================================
@@ -268,7 +268,8 @@ CORS middleware is registered in `app/main.py`:
 
 ### Installation Steps
 ```bash
-cd /workspaces/foundation-backend-migration/backend
+git clone https://github.com/isernai12/foundation-backend.git
+cd foundation-backend
 
 # 1. Create virtual environment
 python3 -m venv .venv
@@ -346,9 +347,8 @@ alembic downgrade -1
 ## 14. Production Deployment & Hosting
 
 ### Deploying to Render (Web Service)
-1. Create a new **Web Service** on [Render](https://render.com).
+1. Create a new **Web Service** on [Render](https://render.com) from `isernai12/foundation-backend`.
 2. Configure settings:
-   - **Root Directory**: `backend`
    - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
@@ -362,7 +362,11 @@ alembic downgrade -1
 
 ### Deploying to Linux VPS with Gunicorn & Systemd
 ```bash
-# Start multi-worker production ASGI server
+git clone https://github.com/isernai12/foundation-backend.git
+cd foundation-backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
 
@@ -371,8 +375,8 @@ gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ## 15. Common Troubleshooting
 
 ### 1. `ModuleNotFoundError: No module named 'app'`
-- **Cause**: Running uvicorn or pytest without the backend directory in `PYTHONPATH`.
-- **Fix**: Run commands from inside the `/backend` directory or export `PYTHONPATH=.`.
+- **Cause**: Running uvicorn or pytest without the repository root in `PYTHONPATH`.
+- **Fix**: Run commands from inside the project root or export `PYTHONPATH=.`.
 
 ### 2. Database Connection Error / SSL Handshake Failure
 - **Cause**: Connecting to cloud databases (like Neon or AWS RDS) without SSL mode.

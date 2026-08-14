@@ -1,0 +1,32 @@
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest / Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment files
+.env
+.env*.local
+.env.development
+.env.test
+.env.production
+!.env.example
+
+# Distribution / Packaging
+dist/
+build/
+*.egg-info/
+
+# Misc
+.DS_Store
+*.log
