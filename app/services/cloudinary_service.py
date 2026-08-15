@@ -28,22 +28,30 @@ MAGIC_BYTES = {
 }
 
 
-def _is_valid_magic_bytes(content: bytes) -> bool:
+def _detect_file_format(content: bytes) -> Optional[Dict[str, str]]:
+    """
+    Detects format from binary magic bytes.
+    Returns dictionary with 'ext' (e.g. '.jpg') and 'mime' (e.g. 'image/jpeg'), or None if unsupported.
+    """
     if len(content) < 4:
-        return False
+        return None
     # Check JPEG
     if content.startswith(MAGIC_BYTES["jpeg"]):
-        return True
+        return {"ext": ".jpg", "mime": "image/jpeg"}
     # Check PNG
     if content.startswith(MAGIC_BYTES["png"]):
-        return True
+        return {"ext": ".png", "mime": "image/png"}
     # Check PDF
     if content.startswith(MAGIC_BYTES["pdf"]):
-        return True
+        return {"ext": ".pdf", "mime": "application/pdf"}
     # Check WebP (RIFF....WEBP)
     if content.startswith(b"RIFF") and len(content) >= 12 and content[8:12] == b"WEBP":
-        return True
-    return False
+        return {"ext": ".webp", "mime": "image/webp"}
+    return None
+
+
+def _is_valid_magic_bytes(content: bytes) -> bool:
+    return _detect_file_format(content) is not None
 
 
 class CloudinaryService:
@@ -87,23 +95,8 @@ class CloudinaryService:
         """
         self._ensure_configured()
 
-        filename = file.filename or "upload"
-        ext = "." + filename.split(".")[-1].lower() if "." in filename else ""
-
-        if ext not in ALLOWED_EXTENSIONS:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Unsupported file extension '{ext}'. Allowed extensions: {', '.join(sorted(ALLOWED_EXTENSIONS))}",
-            )
-
         content = await file.read()
         file_size = len(content)
-
-        if file_size > MAX_FILE_SIZE_BYTES:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File exceeds maximum allowed size of {MAX_FILE_SIZE_BYTES // (1024 * 1024)}MB.",
-            )
 
         if file_size == 0:
             raise HTTPException(
@@ -111,11 +104,41 @@ class CloudinaryService:
                 detail="Empty file uploaded.",
             )
 
-        if not _is_valid_magic_bytes(content):
+        if file_size > MAX_FILE_SIZE_BYTES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File exceeds maximum allowed size of {MAX_FILE_SIZE_BYTES // (1024 * 1024)}MB.",
+            )
+
+        detected_info = _detect_file_format(content)
+        if not detected_info:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="File content does not match supported image or PDF formats.",
             )
+
+        raw_filename = file.filename or "upload"
+        
+        # Check if the filename contains a genuine extension
+        ext = ""
+        if "." in raw_filename:
+            candidate_ext = "." + raw_filename.rsplit(".", 1)[-1].lower()
+            # If candidate extension is unusually long or looks like token fragments, ignore it
+            if len(candidate_ext) <= 6:
+                ext = candidate_ext
+
+        # If a recognized file extension was provided, ensure it is supported
+        if ext:
+            if ext not in ALLOWED_EXTENSIONS:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Unsupported file extension '{ext}'. Allowed extensions: {', '.join(sorted(ALLOWED_EXTENSIONS))}",
+                )
+            sanitized_filename = raw_filename
+        else:
+            # When filename has no genuine extension (e.g. temporary/generated name), use the detected format extension
+            ext = detected_info["ext"]
+            sanitized_filename = f"{raw_filename.split('.')[0]}{ext}"
 
         target_folder = folder.strip("/") if folder else settings.CLOUDINARY_FOLDER
 
@@ -131,10 +154,10 @@ class CloudinaryService:
                 "success": True,
                 "secure_url": result.get("secure_url"),
                 "public_id": result.get("public_id"),
-                "format": result.get("format"),
+                "format": result.get("format") or ext.lstrip("."),
                 "bytes": result.get("bytes") or file_size,
                 "resource_type": result.get("resource_type"),
-                "original_filename": filename,
+                "original_filename": sanitized_filename,
             }
         except Exception as e:
             logger.error(f"Cloudinary upload failed: {e}")
@@ -156,23 +179,42 @@ class CloudinaryService:
         self._ensure_configured()
 
         file_size = len(content)
-        if file_size > MAX_FILE_SIZE_BYTES:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File exceeds maximum allowed size of {MAX_FILE_SIZE_BYTES // (1024 * 1024)}MB.",
-            )
-
         if file_size == 0:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Empty file data.",
             )
 
-        if not _is_valid_magic_bytes(content):
+        if file_size > MAX_FILE_SIZE_BYTES:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File exceeds maximum allowed size of {MAX_FILE_SIZE_BYTES // (1024 * 1024)}MB.",
+            )
+
+        detected_info = _detect_file_format(content)
+        if not detected_info:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="File content does not match supported image or PDF formats.",
             )
+
+        raw_filename = filename or "document"
+        ext = ""
+        if "." in raw_filename:
+            candidate_ext = "." + raw_filename.rsplit(".", 1)[-1].lower()
+            if len(candidate_ext) <= 6:
+                ext = candidate_ext
+
+        if ext:
+            if ext not in ALLOWED_EXTENSIONS:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Unsupported file extension '{ext}'. Allowed extensions: {', '.join(sorted(ALLOWED_EXTENSIONS))}",
+                )
+            sanitized_filename = raw_filename
+        else:
+            ext = detected_info["ext"]
+            sanitized_filename = f"{raw_filename.split('.')[0]}{ext}"
 
         target_folder = folder.strip("/") if folder else settings.CLOUDINARY_FOLDER
 
@@ -188,10 +230,10 @@ class CloudinaryService:
                 "success": True,
                 "secure_url": result.get("secure_url"),
                 "public_id": result.get("public_id"),
-                "format": result.get("format"),
+                "format": result.get("format") or ext.lstrip("."),
                 "bytes": result.get("bytes") or file_size,
                 "resource_type": result.get("resource_type"),
-                "original_filename": filename or "document",
+                "original_filename": sanitized_filename,
             }
         except Exception as e:
             logger.error(f"Cloudinary bytes upload failed: {e}")

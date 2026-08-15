@@ -59,6 +59,7 @@ def db_session() -> Generator[Session, None, None]:
     perm_groups_view = get_or_create_permission("Groups", "View", "View groups")
     perm_groups_add = get_or_create_permission("Groups", "Add", "Add groups")
     perm_groups_edit = get_or_create_permission("Groups", "Edit", "Edit groups")
+    perm_groups_delete = get_or_create_permission("Groups", "Delete", "Delete groups")
 
     perm_funds_view = get_or_create_permission("Fund Collection", "View", "View funds")
     perm_funds_add = get_or_create_permission("Fund Collection", "Add", "Add funds")
@@ -93,6 +94,7 @@ def db_session() -> Generator[Session, None, None]:
         (manager_role.id, perm_groups_view.id),
         (manager_role.id, perm_groups_add.id),
         (manager_role.id, perm_groups_edit.id),
+        (manager_role.id, perm_groups_delete.id),
         (manager_role.id, perm_funds_view.id),
         (manager_role.id, perm_funds_add.id),
         (manager_role.id, perm_funds_edit.id),

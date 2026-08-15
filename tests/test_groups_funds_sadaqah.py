@@ -129,6 +129,72 @@ def test_foundation_group_restrictions(client: TestClient, db_session: Session):
     )
     assert res2.status_code == 400
 
+    # 3. Attempt to hard delete the root foundation group must be rejected (400)
+    res3 = client.delete(
+        f"/api/v1/groups/{fg_id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert res3.status_code == 400
+    err_msg = res3.json().get("detail") or res3.json().get("error", {}).get("message", "")
+    assert "Foundation Central Group cannot be deleted" in err_msg
+
+
+def test_hard_delete_group_with_cascade(client: TestClient, db_session: Session):
+    token = get_token(client, "manager")
+
+    # 1. Create a dedicated group
+    res_grp = client.post(
+        "/api/v1/groups",
+        json={
+            "name": "Temporary Deletable Group",
+            "code": "GRP-TMP-DEL-01",
+            "status": "ACTIVE",
+            "is_foundation_group": False,
+            "member_signup_enabled": True,
+        },
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert res_grp.status_code == 201
+    group_id = res_grp.json()["id"]
+
+    # 2. Add fund to this group
+    res_fund = client.post(
+        "/api/v1/funds",
+        json={"group_id": group_id, "name": "Temp Fund For Group"},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert res_fund.status_code == 201
+    fund_id = res_fund.json()["id"]
+
+    # 3. Add member to this group
+    res_mem = client.post(
+        "/api/v1/members",
+        json={
+            "group_id": group_id,
+            "full_name": "Temporary Member",
+            "mobile": "01799001122",
+            "national_id": "19989900112233",
+        },
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert res_mem.status_code == 201
+    member_id = res_mem.json()["id"]
+
+    # 4. Perform hard delete
+    del_res = client.delete(
+        f"/api/v1/groups/{group_id}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    assert del_res.status_code == 200
+    assert del_res.json()["success"] is True
+
+    # 5. Verify records no longer exist
+    get_grp = client.get(f"/api/v1/groups/{group_id}", headers={"Authorization": f"Bearer {token}"})
+    assert get_grp.status_code == 404
+
+    get_mem = client.get(f"/api/v1/members/{member_id}", headers={"Authorization": f"Bearer {token}"})
+    assert get_mem.status_code == 404
+
 
 # ===========================================================================
 # 2. FUND TESTS
