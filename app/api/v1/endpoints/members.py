@@ -28,7 +28,7 @@ def list_members(
     status: Optional[str] = Query(None, description="Filter by member status (e.g. ACTIVE, INACTIVE)"),
     member_type: Optional[str] = Query(None, description="Filter by member type (e.g. REGULAR, ASSOCIATE)"),
     page: int = Query(1, ge=1, description="Page number (1-indexed)"),
-    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(20, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Members", "View")),
     db: Session = Depends(get_db),
 ) -> MemberListResponse:

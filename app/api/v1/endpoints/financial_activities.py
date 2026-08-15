@@ -29,7 +29,7 @@ def list_activities(
     query: Optional[str] = Query(None, description="Search by activity name, code, purpose"),
     status: Optional[str] = Query(None, description="Filter by status (ACTIVE, COMPLETED, CANCELLED)"),
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(20, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Fund Collection", "View")),
     db: Session = Depends(get_db),
 ) -> FinancialActivityListResponse:
@@ -147,7 +147,7 @@ def disburse_to_beneficiary(
 def get_activity_ledger(
     activity_id: str,
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(50, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(50, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Fund Collection", "View")),
     db: Session = Depends(get_db),
 ) -> FinancialActivityLedgerResponse:

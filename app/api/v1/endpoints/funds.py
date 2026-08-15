@@ -26,7 +26,7 @@ def list_funds(
     query: Optional[str] = Query(None, description="Search by fund name or description"),
     group_id: Optional[str] = Query(None, description="Filter by group UUID"),
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(20, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Fund Collection", "View")),
     db: Session = Depends(get_db),
 ) -> FundListResponse:

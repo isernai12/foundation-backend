@@ -80,7 +80,7 @@ def get_member_dues_ledger(
     member_id: str,
     year: Optional[int] = Query(None, description="Filter by calendar year"),
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(50, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(50, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Members", "View")),
     db: Session = Depends(get_db),
 ) -> MemberDuesLedgerResponse:

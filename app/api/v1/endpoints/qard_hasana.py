@@ -31,7 +31,7 @@ def list_qard_hasana(
     member_id: Optional[str] = Query(None, description="Filter by Member UUID"),
     beneficiary_id: Optional[str] = Query(None, description="Filter by Beneficiary UUID"),
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(20, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(20, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Loans", "View")),
     db: Session = Depends(get_db),
 ) -> QardHasanaListResponse:
@@ -132,7 +132,7 @@ def repay_qard_hasana(
 def get_qard_hasana_ledger(
     loan_id: str,
     page: int = Query(1, ge=1, description="Page number"),
-    page_size: int = Query(50, ge=1, le=100, description="Items per page"),
+    page_size: int = Query(50, ge=1, le=1000, description="Items per page"),
     current_user: User = Depends(require_permission("Loans", "View")),
     db: Session = Depends(get_db),
 ) -> QardHasanaLedgerResponse:

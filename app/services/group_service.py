@@ -114,21 +114,25 @@ class GroupService:
             memberSignupEnabled=signup_enabled,
             createdBy=current_user_id,
         )
-        db.add(group)
-        db.flush()
+        try:
+            db.add(group)
+            db.flush()
 
-        audit_repo.log(
-            db=db,
-            action="CREATE",
-            module="GROUP",
-            user_id=current_user_id,
-            reference_id=group.id,
-            remarks=f"Created group {group.code} ({group.name})",
-        )
+            audit_repo.log(
+                db=db,
+                action="CREATE",
+                module="GROUP",
+                user_id=current_user_id,
+                reference_id=group.id,
+                remarks=f"Created group {group.code} ({group.name})",
+            )
 
-        db.commit()
-        db.refresh(group)
-        return format_group_response(group, db)
+            db.commit()
+            db.refresh(group)
+            return format_group_response(group, db)
+        except Exception:
+            db.rollback()
+            raise
 
     def update_group(
         self,
@@ -176,18 +180,22 @@ class GroupService:
 
         group.updatedBy = current_user_id
 
-        audit_repo.log(
-            db=db,
-            action="UPDATE",
-            module="GROUP",
-            user_id=current_user_id,
-            reference_id=group.id,
-            remarks=f"Updated group {group.code}",
-        )
+        try:
+            audit_repo.log(
+                db=db,
+                action="UPDATE",
+                module="GROUP",
+                user_id=current_user_id,
+                reference_id=group.id,
+                remarks=f"Updated group {group.code}",
+            )
 
-        db.commit()
-        db.refresh(group)
-        return format_group_response(group, db)
+            db.commit()
+            db.refresh(group)
+            return format_group_response(group, db)
+        except Exception:
+            db.rollback()
+            raise
 
 
 group_service = GroupService()
