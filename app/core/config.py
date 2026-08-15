@@ -37,14 +37,6 @@ class Settings(BaseSettings):
     HOST: str = "0.0.0.0"
     PORT: int = 8000
 
-    # CORS
-    CORS_ORIGINS: list[str] = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-    ]
-
     # Cloudinary CDN Configuration
     CLOUDINARY_CLOUD_NAME: Optional[str] = None
     CLOUDINARY_API_KEY: Optional[str] = None
@@ -52,17 +44,24 @@ class Settings(BaseSettings):
     CLOUDINARY_URL: Optional[str] = None
     CLOUDINARY_FOLDER: str = "foundation-erp"
 
-    @field_validator("CORS_ORIGINS", mode="before")
+    @field_validator("PORT", mode="before")
     @classmethod
-    def assemble_cors_origins(cls, v: Any) -> list[str]:
-        if isinstance(v, str):
-            if v.strip() == "*":
-                return ["*"]
-            if not v.startswith("["):
-                return [i.strip() for i in v.split(",") if i.strip()]
-        elif isinstance(v, list):
-            return [str(i).strip() for i in v if str(i).strip()]
-        return ["*"]
+    def clean_port(cls, v: Any) -> int:
+        if v is None or str(v).strip() == "":
+            return 8000
+        try:
+            return int(str(v).strip())
+        except (ValueError, TypeError):
+            return 8000
+
+    @field_validator("DEBUG", mode="before")
+    @classmethod
+    def clean_debug(cls, v: Any) -> bool:
+        if v is None or str(v).strip() == "":
+            return False
+        if isinstance(v, bool):
+            return v
+        return str(v).strip().lower() in ("true", "1", "t", "yes", "y")
 
     @field_validator("DATABASE_URL", mode="before")
     @classmethod

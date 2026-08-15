@@ -8,14 +8,13 @@ def test_settings_defaults():
     assert settings.API_V1_STR == "/api/v1"
     assert settings.HOST == "0.0.0.0"
     assert settings.PORT == 8000
-    assert isinstance(settings.CORS_ORIGINS, list)
 
 
-def test_cors_origins_parsing():
-    settings = Settings(CORS_ORIGINS="http://localhost:3000, https://app.example.com")
-    assert "http://localhost:3000" in settings.CORS_ORIGINS
-    assert "https://app.example.com" in settings.CORS_ORIGINS
-    assert len(settings.CORS_ORIGINS) == 2
+def test_settings_robust_with_empty_strings():
+    settings = Settings(PORT="", DEBUG="", DATABASE_URL="")
+    assert settings.PORT == 8000
+    assert settings.DEBUG is False
+    assert settings.sqlalchemy_database_url.startswith("postgresql+psycopg://")
 
 
 def test_safe_database_display_masks_credentials():
