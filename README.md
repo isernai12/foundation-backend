@@ -281,15 +281,15 @@ pip install -r requirements.txt
 
 ## 9. How to Run Locally
 
-### Start FastAPI with Auto-Reload
+### Start FastAPI Locally
 ```bash
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-The service starts at `http://127.0.0.1:8000`:
-- **API Root**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-- **Swagger Documentation**: [http://127.0.0.1:8000/api/v1/docs](http://127.0.0.1:8000/api/v1/docs)
-- **ReDoc Documentation**: [http://127.0.0.1:8000/api/v1/redoc](http://127.0.0.1:8000/api/v1/redoc)
+The service starts at `http://0.0.0.0:8000` (or `http://localhost:8000`):
+- **API Root**: [http://localhost:8000/](http://localhost:8000/)
+- **Swagger Documentation**: [http://localhost:8000/api/v1/docs](http://localhost:8000/api/v1/docs)
+- **ReDoc Documentation**: [http://localhost:8000/api/v1/redoc](http://localhost:8000/api/v1/redoc)
 
 ---
 

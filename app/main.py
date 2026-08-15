@@ -93,10 +93,10 @@ if __name__ == "__main__":
     import uvicorn
 
     port = int(os.environ.get("PORT", settings.PORT))
-    host = os.environ.get("HOST", settings.HOST)
+    host = os.environ.get("HOST", "0.0.0.0")
     uvicorn.run(
         "app.main:app",
         host=host,
         port=port,
-        reload=settings.DEBUG and not settings.is_production,
+        reload=False,
     )
