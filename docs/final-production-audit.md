@@ -40,7 +40,6 @@
 | Parameter | Recommended Production Value | Current Status |
 | :--- | :--- | :--- |
 | `DEBUG` | `False` | Enforced in production |
-| `CORS_ORIGINS` | Explicit whitelist (`https://yourdomain.com`) | Configured |
 | `DATABASE_URL` | Neon PostgreSQL connection string | Validated |
 | `NEXT_PUBLIC_API_URL` | Production FastAPI URL (`https://api.yourdomain.com`) | Parameterized |
 | Database Engine | PostgreSQL only | PASS (No SQLite) |
